@@ -7,6 +7,11 @@ const websiteSettingsSchema = new mongoose.Schema(
     tagline: { type: String, trim: true, maxlength: 120, default: 'THE SOUND OF MY OWN WORLD' },
     heroIntro: { type: String, trim: true, maxlength: 300, default: '' },
     heroImage: { type: String, trim: true, validate: imageValidator, default: '' },
+    // Optional 3D model (.glb) for the homepage, replacing the default microphone.
+    heroModel: {
+      type: String, trim: true, default: '',
+      match: [/^$|^\/uploads\/[\w.-]+\.glb$/, 'Upload the 3D model through the admin'],
+    },
     socialLinks: [linkSchema], // official social profiles only
     streamingProfiles: [linkSchema], // official artist pages on streaming platforms
     contactEmail: {

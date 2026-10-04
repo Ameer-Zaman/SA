@@ -115,6 +115,7 @@ export const settingsSchema = z.object({
   tagline: z.string().max(120).optional(),
   heroIntro: z.string().max(300).optional(),
   heroImage: image,
+  heroModel: z.union([z.string().regex(/^\/uploads\/[\w.-]+\.glb$/, 'Upload the 3D model through the admin'), z.literal('')]).optional(),
   socialLinks: z.array(link).max(15).optional(),
   streamingProfiles: z.array(link).max(15).optional(),
   contactEmail: z.union([z.string().email().max(200), z.literal('')]).optional(),

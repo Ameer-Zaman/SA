@@ -2,7 +2,7 @@
   "name": "sa-website",
   "version": "1.0.0",
   "private": true,
-  "description": "Official website for SA — MERN stack (React + Vite client, Express + MongoDB API)",
+  "description": "Official website for SA \u2014 MERN stack (React + Vite client, Express + MongoDB API)",
   "scripts": {
     "install:all": "npm install && npm install --prefix server && npm install --prefix client",
     "dev": "concurrently -n api,web -c yellow,cyan \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
@@ -13,5 +13,8 @@
   },
   "devDependencies": {
     "concurrently": "^10.0.5"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }

@@ -30,6 +30,7 @@ export const getSettings = asyncHandler(async (req, res) => {
       tagline: s.tagline,
       heroIntro: s.heroIntro,
       heroImage: s.heroImage,
+      heroModel: s.heroModel,
       socialLinks: s.socialLinks,
       streamingProfiles: s.streamingProfiles,
       contactEmail: s.showContactEmail ? s.contactEmail : '',

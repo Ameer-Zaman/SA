@@ -58,9 +58,7 @@ export default function ReleaseDetail() {
           <div className="lg:col-span-6">
             <Reveal>
               <h1 className="display text-[clamp(4rem,12vw,11rem)]">{item.title}</h1>
-              {!item.verified && (
-                <div className="mt-5"><Tag tone="warn">Release details are being verified</Tag></div>
-              )}
+              {!item.verified && <div className="mt-5"><Tag tone="warn">Release details are being verified</Tag></div>}
             </Reveal>
 
             <dl className="mt-10 border-t border-line">
@@ -83,13 +81,7 @@ export default function ReleaseDetail() {
                 <p className="label mb-4">Listen on</p>
                 <div className="grid gap-px border border-line bg-line sm:grid-cols-2 sm:[&>*:last-child:nth-child(odd)]:col-span-2">
                   {item.streamingLinks.map((l) => (
-                    <a
-                      key={l.url}
-                      href={l.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group flex items-center justify-between bg-ink px-5 py-5 transition-colors hover:bg-ink-2"
-                    >
+                    <a key={l.url} href={l.url} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between bg-ink px-5 py-5 transition-colors hover:bg-ink-2">
                       <span className="font-mono text-sm uppercase tracking-wider">{linkLabel(l)}</span>
                       <ArrowUpRight size={18} className="text-mute transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-acid" aria-hidden />
                     </a>
@@ -108,11 +100,13 @@ export default function ReleaseDetail() {
             </div>
             <ol className="mt-6">
               {tracks.map((t, i) => (
-                <li key={t._id || i} className="group grid grid-cols-[2.5rem_1fr_auto] items-baseline gap-4 border-b border-line py-5 sm:grid-cols-[4rem_1fr_auto]">
+                <li key={t._id || i} className="grid grid-cols-[2.5rem_1fr_auto] items-baseline gap-4 border-b border-line py-5 sm:grid-cols-[4rem_1fr_auto]">
                   <span className="font-mono text-xs text-mute">{String(i + 1).padStart(2, '0')}</span>
                   <div className="min-w-0">
                     {t.release?.slug ? (
-                      <Link to={`/music/${t.release.slug}`} className="display inline-flex items-start gap-2 text-2xl transition-colors hover:text-acid sm:text-4xl">{t.title}<ArrowUpRight size={16} className="mt-1 text-mute" aria-hidden /></Link>
+                      <Link to={`/music/${t.release.slug}`} className="display inline-flex items-start gap-2 text-2xl transition-colors hover:text-acid sm:text-4xl">
+                        {t.title}<ArrowUpRight size={16} className="mt-1 text-mute" aria-hidden />
+                      </Link>
                     ) : (
                       <span className="display text-2xl sm:text-4xl">{t.title}</span>
                     )}

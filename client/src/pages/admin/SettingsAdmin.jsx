@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { Box, Upload, X } from 'lucide-react';
 import { PageHead, Field, Toggle, ImageField, LinksEditor, RowControls, move, cleanLinks, fieldErrors } from '../../components/admin/Fields';
 import { Loader, ErrorState } from '../../components/ui/Primitives';
 import { useToast } from '../../context/ToastContext';
@@ -21,7 +22,7 @@ export default function SettingsAdmin() {
       .then(([st, m, v]) => {
         const x = st.settings;
         setS({
-          tagline: x.tagline || '', heroIntro: x.heroIntro || '', heroImage: x.heroImage || '',
+          tagline: x.tagline || '', heroIntro: x.heroIntro || '', heroImage: x.heroImage || '', heroModel: x.heroModel || '',
           socialLinks: x.socialLinks || [], streamingProfiles: x.streamingProfiles || [],
           contactEmail: x.contactEmail || '', showContactEmail: !!x.showContactEmail,
           featuredMusic: x.featuredMusic || '', featuredVideos: x.featuredVideos || [],
@@ -70,6 +71,7 @@ export default function SettingsAdmin() {
           <textarea className="input min-h-[80px]" value={s.heroIntro} onChange={set('heroIntro')} maxLength={300} />
         </Field>
         <ImageField label="Hero photograph" value={s.heroImage} onChange={set('heroImage')} aspect="aspect-video" />
+        <ModelField value={s.heroModel} onChange={set('heroModel')} error={errors.heroModel} />
       </Section>
 
       <Section title="Featured content">
@@ -133,5 +135,50 @@ function Section({ title, children }) {
       <h2 className="label mb-6 border-b border-line pb-3 text-bone">{title}</h2>
       <div className="space-y-6">{children}</div>
     </section>
+  );
+}
+
+/** Upload a .glb 3D model to replace the default microphone on the homepage. */
+function ModelField({ value, onChange, error }) {
+  const toast = useToast();
+  const input = useRef(null);
+  const [busy, setBusy] = useState(false);
+
+  async function upload(file) {
+    if (!file) return;
+    setBusy(true);
+    try {
+      const { url } = await api.uploadModel(file);
+      onChange(url);
+      toast('3D model uploaded. Save settings to publish it.');
+    } catch (e) {
+      toast(e.message, 'error');
+    } finally {
+      setBusy(false);
+      if (input.current) input.current.value = '';
+    }
+  }
+
+  return (
+    <div>
+      <span className="label mb-2 block">Homepage 3D model</span>
+      <div className="flex flex-wrap items-center gap-3 border border-line p-4">
+        <Box size={20} className={value ? 'text-acid' : 'text-mute'} aria-hidden />
+        <span className="min-w-0 flex-1 truncate text-sm">{value ? value.split('/').pop() : 'Default: studio microphone'}</span>
+        <button type="button" className="btn-ghost btn-sm" onClick={() => input.current?.click()} disabled={busy}>
+          <Upload size={14} aria-hidden /> {busy ? 'Uploading…' : value ? 'Replace' : 'Upload .glb'}
+        </button>
+        {value && (
+          <button type="button" className="btn-ghost btn-sm" onClick={() => onChange('')}>
+            <X size={14} aria-hidden /> Use default
+          </button>
+        )}
+        <input ref={input} type="file" accept=".glb,model/gltf-binary" className="hidden" onChange={(e) => upload(e.target.files?.[0])} />
+      </div>
+      <p className="mt-1.5 text-xs text-mute/80">
+        Optional. A .glb file up to 25 MB, for example a 3D scan or model of SA made by a 3D artist. Keep it under ~5 MB so the homepage stays fast.
+      </p>
+      {error && <p className="mt-1.5 text-xs text-red-300">{error}</p>}
+    </div>
   );
 }

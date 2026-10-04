@@ -12,6 +12,11 @@ export class ApiError extends Error {
 }
 
 async function request(path, { method = 'GET', body, signal, isForm } = {}) {
+  // Offline preview build only (VITE_DEMO=true); removed from normal builds.
+  if (import.meta.env.VITE_DEMO === 'true') {
+    const { demoRequest } = await import('./demo.js');
+    return demoRequest(path, { method, body });
+  }
   const res = await fetch(`${API_BASE}/api${path}`, {
     method,
     credentials: 'include',
@@ -71,6 +76,11 @@ export const api = {
 
   // admin
   stats: () => request('/stats'),
+  uploadModel: (file) => {
+    const fd = new FormData();
+    fd.append('model', file);
+    return request('/uploads/model', { method: 'POST', body: fd, isForm: true });
+  },
   uploadImage: (file, kind = 'photo') => {
     const fd = new FormData();
     fd.append('image', file);

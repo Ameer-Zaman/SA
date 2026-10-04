@@ -11,6 +11,7 @@ export default defineConfig({
     },
   },
   build: {
+    chunkSizeWarningLimit: 700, // the 3D scene (three.js) is a lazily-loaded chunk
     rollupOptions: {
       output: {
         manualChunks(id) {

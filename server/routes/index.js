@@ -5,12 +5,12 @@ import * as videos from '../controllers/videoController.js';
 import { getAbout, updateAbout } from '../controllers/aboutController.js';
 import * as contact from '../controllers/contactController.js';
 import { getSettings, updateSettings } from '../controllers/settingsController.js';
-import { uploadImage } from '../controllers/uploadController.js';
+import { uploadImage, uploadModel } from '../controllers/uploadController.js';
 import { getStats } from '../controllers/statsController.js';
 import { protect, authorize, optionalAuth } from '../middleware/auth.js';
 import { validate, validObjectId } from '../middleware/validate.js';
 import { authLimiter, contactLimiter } from '../middleware/rateLimit.js';
-import { imageUpload } from '../middleware/upload.js';
+import { imageUpload, modelUpload } from '../middleware/upload.js';
 import * as S from '../utils/schemas.js';
 
 const admin = [protect, authorize('admin')];
@@ -56,5 +56,7 @@ export const settingsRoutes = Router()
   .put('/', ...admin, validate(S.settingsSchema), updateSettings);
 
 // ---- Uploads & stats (admin only)
-export const uploadRoutes = Router().post('/', ...admin, imageUpload, uploadImage);
+export const uploadRoutes = Router()
+  .post('/', ...admin, imageUpload, uploadImage)
+  .post('/model', ...admin, modelUpload, uploadModel);
 export const statsRoutes = Router().get('/', ...admin, getStats);

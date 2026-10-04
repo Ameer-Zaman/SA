@@ -5,7 +5,6 @@ import { useSettings } from '../../context/SettingsContext';
 import { useFetch } from '../../hooks/useFetch';
 import { api } from '../../services/api';
 import { paragraphs } from '../../services/format';
-import Hero from './Hero';
 import FeaturedRelease from './FeaturedRelease';
 import ReleaseCard from '../ui/ReleaseCard';
 import Media from '../ui/Media';
@@ -17,7 +16,7 @@ export function LatestReleases() {
   const { data, loading } = useFetch((s) => api.listMusic({ limit: 7 }, s), []);
   const featuredId = settings.featuredMusic?._id;
   const items = (data?.items || []).filter((m) => m._id !== featuredId).slice(0, 6);
-  // Nothing extra to show beyond the featured release → skip the section entirely.
+  // Nothing beyond the featured release → skip the section.
   if (!loading && items.length === 0 && featuredId) return null;
 
   return (
@@ -103,4 +102,4 @@ export function VideoPreview() {
   );
 }
 
-export { Hero, FeaturedRelease };
+export { FeaturedRelease };

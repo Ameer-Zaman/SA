@@ -31,3 +31,17 @@ export const uploadImage = asyncHandler(async (req, res) => {
   await fs.writeFile(path.join(UPLOAD_DIR, name), output.data);
   ok(res, { url: `/uploads/${name}`, width: output.info.width, height: output.info.height }, 201);
 });
+
+/**
+ * POST /api/uploads/model  (multipart, field "model")
+ * Accepts binary glTF (.glb) files only; the header is checked, not just the extension.
+ */
+export const uploadModel = asyncHandler(async (req, res) => {
+  if (!req.file) throw ApiError.badRequest('No model uploaded (field name must be "model")');
+  const buf = req.file.buffer;
+  const isGlb = buf.length > 12 && buf.toString('ascii', 0, 4) === 'glTF' && buf.readUInt32LE(4) === 2;
+  if (!isGlb) throw ApiError.badRequest('This is not a valid .glb (glTF 2.0 binary) file');
+  const name = `model-${Date.now()}-${crypto.randomBytes(6).toString('hex')}.glb`;
+  await fs.writeFile(path.join(UPLOAD_DIR, name), buf);
+  ok(res, { url: `/uploads/${name}`, size: buf.length }, 201);
+});

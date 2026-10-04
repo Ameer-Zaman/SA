@@ -18,7 +18,7 @@ export default function PublicLayout() {
   }, [location.pathname, location.hash]);
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col overflow-x-clip">
       <Navbar />
       <AnimatePresence mode="wait" initial={false}>
         <motion.main
@@ -34,6 +34,11 @@ export default function PublicLayout() {
         </motion.main>
       </AnimatePresence>
       <Footer />
+      {import.meta.env.VITE_DEMO === 'true' && (
+        <p className="fixed bottom-3 right-3 z-[70] border border-acid/60 bg-ink/90 px-3 py-1.5 font-mono text-[10px] uppercase tracking-wider text-acid">
+          Preview: placeholder content
+        </p>
+      )}
     </div>
   );
 }

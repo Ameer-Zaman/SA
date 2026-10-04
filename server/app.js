@@ -45,7 +45,12 @@ app.use(cookieParser());
 if (!env.isProd) app.use(morgan('dev'));
 
 // Uploaded images (already optimized WebP) with long cache — filenames are unique.
-app.use('/uploads', express.static(UPLOAD_DIR, { maxAge: '30d', immutable: true, index: false }));
+app.use('/uploads', express.static(UPLOAD_DIR, {
+  maxAge: '30d',
+  immutable: true,
+  index: false,
+  setHeaders: (res, filePath) => { if (filePath.endsWith('.glb')) res.setHeader('Content-Type', 'model/gltf-binary'); },
+}));
 
 app.get('/api/health', (_req, res) => res.json({ success: true, data: { status: 'ok' } }));
 app.use('/api', apiLimiter);

@@ -73,15 +73,15 @@ export default function Contact() {
 
       <section className="container-x mt-16" aria-label="Inquiry types">
         <div className="grid gap-px border border-line bg-line md:grid-cols-3">
-          {TYPES.map((t, i) => (
+          {TYPES.map((t) => (
             <button
               key={t.key}
               type="button"
               onClick={() => pick(t.key)}
+              aria-pressed={form.inquiryType === t.key}
               className={`group bg-ink p-8 text-left transition-colors hover:bg-ink-2 ${form.inquiryType === t.key ? 'bg-ink-2' : ''}`}
             >
-              <span className="font-mono text-[11px] text-acid">{String(i + 1).padStart(2, '0')}</span>
-              <span className="display mt-8 flex items-center justify-between text-4xl">
+              <span className="display flex items-center justify-between text-4xl">
                 {t.title}
                 <ArrowUpRight className="text-mute transition-all group-hover:translate-x-1 group-hover:text-acid" aria-hidden />
               </span>
@@ -109,7 +109,7 @@ export default function Contact() {
           )}
         </aside>
 
-        <div className="lg:col-span-7 lg:col-start-6" ref={formRef}>
+        <div className="scroll-mt-28 lg:col-span-7 lg:col-start-6" ref={formRef}>
           <AnimatePresence mode="wait">
             {status === 'sent' ? (
               <motion.div key="sent" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="border border-line p-10" role="status">

@@ -8,6 +8,7 @@ const FALLBACK = {
   tagline: 'THE SOUND OF MY OWN WORLD',
   heroIntro: '',
   heroImage: '',
+  heroModel: '',
   socialLinks: [],
   streamingProfiles: [],
   contactEmail: '',

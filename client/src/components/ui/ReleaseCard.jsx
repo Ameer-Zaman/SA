@@ -10,7 +10,7 @@ export default function ReleaseCard({ release, index, size = 'md' }) {
   const listen = primaryListen(release);
   return (
     <article className="group relative">
-      <Link to={`/music/${release.slug}`} className="block" aria-label={`${release.title} — view release`}>
+      <Link to={`/music/${release.slug}`} className="block" aria-label={`${release.title}, view release`}>
         <div className="overflow-hidden">
           <div className="transition-transform duration-700 ease-cine group-hover:scale-[1.03]">
             <Cover release={release} />

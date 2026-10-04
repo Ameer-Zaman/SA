@@ -11,7 +11,7 @@ export default function Footer() {
     <footer className="relative mt-32 border-t border-line">
       <div className="container-x grid gap-12 py-16 md:grid-cols-12">
         <div className="md:col-span-5">
-          <Link to="/" aria-label="SA — home" className="display block text-[clamp(6rem,20vw,16rem)] leading-[0.8] text-bone">
+          <Link to="/" aria-label="SA, home" className="display block text-[clamp(6rem,20vw,16rem)] leading-[0.8] text-bone">
             SA<span className="text-acid">.</span>
           </Link>
           {settings.tagline && <p className="label mt-6">{settings.tagline}</p>}

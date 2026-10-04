@@ -25,7 +25,6 @@ export default function About() {
     <>
       <Seo title="About" description={bio.introduction?.slice(0, 155)} image={bio.portraitImage} path="/about" />
 
-      {/* Intro */}
       <header className="container-x pt-32 sm:pt-44">
         <p className="label">Biography</p>
         <Reveal>
@@ -39,7 +38,7 @@ export default function About() {
           </div>
           <div className="flex flex-col justify-end lg:col-span-5">
             {paragraphs(bio.introduction).map((p, i) => (
-              <Reveal key={i} delay={i * 0.08}>
+              <Reveal key={p.slice(0, 20)} delay={i * 0.08}>
                 <p className={i === 0 ? 'text-2xl leading-snug text-bone sm:text-3xl' : 'mt-6 text-lg text-bone/75'}>{p}</p>
               </Reveal>
             ))}
@@ -47,7 +46,6 @@ export default function About() {
         </div>
       </header>
 
-      {/* Long-form biography */}
       {bio.biography && (
         <section className="container-x pt-28" aria-labelledby="story-title">
           <SectionHeader index="auto" label="The story" />
@@ -57,13 +55,12 @@ export default function About() {
               <div className="lg:col-span-4"><Media src={bio.secondaryImage} alt="SA" className="aspect-[3/4]" /></div>
             )}
             <div className={`space-y-6 text-lg leading-relaxed text-bone/80 ${bio.secondaryImage ? 'lg:col-span-7 lg:col-start-6' : 'lg:col-span-8 lg:col-start-5'}`}>
-              {paragraphs(bio.biography).map((p, i) => <Reveal key={i}><p>{p}</p></Reveal>)}
+              {paragraphs(bio.biography).map((p) => <Reveal key={p.slice(0, 24)}><p>{p}</p></Reveal>)}
             </div>
           </div>
         </section>
       )}
 
-      {/* Timeline */}
       {bio.timeline?.length > 0 && (
         <section className="container-x pt-28" aria-labelledby="timeline-title">
           <SectionHeader index="auto" label="Timeline" />
@@ -83,7 +80,6 @@ export default function About() {
         </section>
       )}
 
-      {/* Musical identity */}
       {identity.length > 0 && (
         <section className="container-x pt-28" aria-labelledby="identity-title">
           <SectionHeader index="auto" label="Musical identity" />
@@ -91,10 +87,9 @@ export default function About() {
           <div className="mt-12 grid gap-px border border-line bg-line md:grid-cols-2">
             {identity.map(([k, label], i) => (
               <Reveal key={k} delay={i * 0.06} className="bg-ink p-8 sm:p-12">
-                <p className="font-mono text-[11px] text-acid">{String(i + 1).padStart(2, '0')}</p>
-                <h3 className="display mt-6 text-4xl">{label}</h3>
+                <h3 className="display text-4xl">{label}</h3>
                 <div className="mt-5 space-y-4 text-bone/75">
-                  {paragraphs(bio.musicalIdentity[k]).map((p, j) => <p key={j}>{p}</p>)}
+                  {paragraphs(bio.musicalIdentity[k]).map((p) => <p key={p.slice(0, 20)}>{p}</p>)}
                 </div>
               </Reveal>
             ))}
@@ -102,7 +97,6 @@ export default function About() {
         </section>
       )}
 
-      {/* Collaborations */}
       {bio.collaborations?.length > 0 && (
         <section className="container-x pt-28" aria-labelledby="collab-title">
           <SectionHeader index="auto" label="Collaborations & collectives" />

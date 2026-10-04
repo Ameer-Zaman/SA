@@ -11,7 +11,7 @@ export default {
         line: 'rgba(255,255,255,0.12)',
       },
       fontFamily: {
-        display: ['Anton', 'Impact', 'Haettenschweiler', 'sans-serif'],
+        display: ['Anton', 'Impact', 'sans-serif'],
         sans: ['"Inter Tight"', 'Inter', 'system-ui', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
       },

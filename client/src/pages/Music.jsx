@@ -24,7 +24,7 @@ export default function Music() {
 
   return (
     <>
-      <Seo title="Music" description="Discography of SA — singles, collaborations and group releases." path="/music" />
+      <Seo title="Music" description="Discography of SA: singles, collaborations and group releases." path="/music" />
       <header className="container-x pt-32 sm:pt-44">
         <p className="label">Discography</p>
         <Reveal><h1 className="display mt-4 text-[clamp(6rem,24vw,22rem)] leading-[0.78]">Music</h1></Reveal>
